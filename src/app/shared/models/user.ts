@@ -5,5 +5,7 @@ export interface User {
   name?: string,
   email: EmailValidator,
   password?: string,
-  password_confirmation?: string
+  password_confirmation?: string,
+  created_at?: Date,
+  updated_at?: Date
 }

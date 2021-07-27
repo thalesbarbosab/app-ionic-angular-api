@@ -28,8 +28,8 @@
           </ion-item>
           <ion-item *ngIf="form_group.controls.name.touched || form_group.controls.name.dirty">
             <small class="error" *ngIf="form_group.controls.name.errors?.required">obrigatório preenchimento</small>
-            <small class="error" *ngIf="form_group.controls.name.errors?.minlength">insira entre 5 a 100 caracteres</small>
-            <small class="error" *ngIf="form_group.controls.name.errors?.maxlength">insira entre 5 a 100 caracteres</small>
+            <small class="error" *ngIf="form_group.controls.name.errors?.minlength">insira pelo menos 5 caracteres</small>
+            <small class="error" *ngIf="form_group.controls.name.errors?.maxlength">insira  no máximo 100 caracteres</small>
           </ion-item>
           <ion-item>
             <ion-label position="floating">E-mail*</ion-label>

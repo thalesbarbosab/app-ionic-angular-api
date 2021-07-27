@@ -37,27 +37,24 @@ export class ApiInterceptor implements HttpInterceptor {
           if (event instanceof HttpResponse) {
             let message = event.body.message;
             if(message!==undefined){
-              //message = 'sucesso !'
-              this.notification_service.customSnackBar(`${message}`, 'fechar', 'green-snackbar');
+              this.notification_service.presentIonToast(`${message}`,5000,'success');
             }
-
           }
         }, error => {
           if (error.status == 400) {
-            this.notification_service.customSnackBar('as credenciais informadas não foram encontradas', 'fechar', 'yellow-snackbar');
+            this.notification_service.presentIonToast('as credenciais informadas não foram encontradas',5000,'danger');
           }else if (error.status >= 401 && error.status <= 403) {
-            this.notification_service.customSnackBar('você não possúi permissão para realizar esta ação, realize o login e tente novamente.', 'fechar', 'yellow-snackbar');
-            this.router.navigate(['/login']);
+            this.notification_service.presentIonToast('você não possúi permissão para realizar esta ação, realize o login e tente novamente.',5000,'warning');
+            this.router.navigate(['login']);
           } else if (error.status == 422) {
-            //this.notification_service.customSnackBar('verifique todas as informações enviadas, e repita a ação', 'fechar', 'yellow-snackbar');
             Object.entries(error.error.errors).forEach((item) => {
               item.forEach((item2, index) => {
                 if (index == 1)
-                  this.notification_service.customSnackBar(`${item2}`, 'fechar', 'red-snackbar');
+                this.notification_service.presentIonToast(`${item2}`,6000,'danger');
               })
             })
           } else if (error.status == 500) {
-            this.notification_service.customSnackBar('ocorreu um erro e não conseguimos processar a última ação', 'fechar', 'red-snackbar');
+            this.notification_service.presentIonToast('ocorreu um erro e não conseguimos processar a última ação',5000,'danger');
           }
         })
       );

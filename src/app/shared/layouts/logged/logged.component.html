@@ -24,7 +24,7 @@
           </ion-item>
           <ion-item lines="none">
             <ion-icon slot="start" ios="log-out-outline" md="log-out-sharp"></ion-icon>
-            <ion-button expand="block" [routerLink]="'/login'" color="medium">logout (desconectar meu usuário)</ion-button>
+            <ion-button expand="block" (click)="logout()" color="medium">logout (desconectar meu usuário)</ion-button>
           </ion-item>
         </ion-list>
       </ion-content>

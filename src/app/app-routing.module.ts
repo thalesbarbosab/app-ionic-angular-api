@@ -10,11 +10,12 @@ import { ResetComponent } from './guest/reset/reset.component';
 
 import { HomeComponent } from './logged/home/home.component';
 import { UserIndexComponent } from './logged/users/index/index.component';
+import { ApiGuard, GuestGuard } from './shared/guards';
 
 const routes: Routes = [
   {
     path: 'logged',
-    //canActivate: [ApiGuard],
+    canActivate: [ApiGuard],
     component: LoggedComponent,
     children: [
       {
@@ -28,6 +29,7 @@ const routes: Routes = [
   },
   {
     path: '',
+    canActivate: [GuestGuard],
     component: GuestComponent,
     children: [
       {

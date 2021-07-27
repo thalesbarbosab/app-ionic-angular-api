@@ -34,7 +34,21 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() : void{
-    //
+    this.notification_service.presentIonLoading();
+    let auth = this.form_group.getRawValue() as Auth;
+    this.user_service.login(auth).subscribe(
+      (response) => {
+        this.resetForm();
+        this.user_service.setAuthCredentials(response.access_token,response.refresh_token);
+        this.router.navigate(['logged']);
+      },
+      () => {
+        this.notification_service.hideIonLoading();
+      },
+      () => {
+        this.notification_service.hideIonLoading();
+      }
+    );
   }
 
 }

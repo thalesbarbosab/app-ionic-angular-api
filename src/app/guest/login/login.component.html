@@ -34,7 +34,7 @@
             <ion-label position="floating">Senha*</ion-label>
             <ion-input type="password" name="password" id="password" [formGroup]="form_group" formControlName="password"></ion-input>
           </ion-item>
-          <ion-item *ngIf="form_group.controls.password.touched">
+          <ion-item *ngIf="form_group.controls.password.touched || form_group.controls.username.dirty">
             <small class="error" *ngIf="form_group.controls.password.errors?.required">obrigatório preenchimento</small>
           </ion-item>
           <ion-item>

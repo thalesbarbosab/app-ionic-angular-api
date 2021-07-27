@@ -23,8 +23,8 @@ export class UserService {
       return true;
     }
     else{
-      return false;
       document.body.setAttribute('color-theme','light');
+      return false;
     }
   }
 
@@ -43,8 +43,9 @@ export class UserService {
     const token = window.localStorage.getItem('access_token');
     return token;
   }
+
   getTokenExpirationDate(token: string): Date {
-    const decoded: any =  jwt_decode.default(token);
+    const decoded: any = jwt_decode.default(token);
     if (decoded.exp === undefined) {
       return null;
     }
@@ -52,6 +53,7 @@ export class UserService {
     date.setUTCSeconds(decoded.exp);
     return date;
   }
+
   isTokenExpired(token?: string): boolean {
     if (!token) {
       return true;
@@ -62,6 +64,7 @@ export class UserService {
     }
     return !(date.valueOf() > new Date().valueOf());
   }
+
   isUserLoggedIn() {
     const token = this.getAuthorizationToken();
     if (!token) {
@@ -71,10 +74,12 @@ export class UserService {
     }
     return true;
   }
+
   removeTokens(){
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
   }
+
   login(auth : Auth) : Observable<Auth>{
     auth.grant_type = environment.grant_type;
     auth.client_id = environment.client_id;
@@ -90,30 +95,23 @@ export class UserService {
   register(user : User) : Observable<User> {
     return this.http.post<User>(`${environment.api}api/user`,user,{headers: this.http_headers});
   }
-  async reset(email: string) {
+
+  reset(email: string) : Observable<any> {
     const params = {
       'email' : email
     }
-    const result = await this.http.post<any>(`${environment.api}api/user/reset`,params,{headers: this.http_headers}).toPromise();
-    return result;
+    return this.http.post<any>(`${environment.api}api/user/reset`,params,{headers: this.http_headers});
   }
-  async logout() {
-    const result = await this.http.post<any>(`${environment.api}api/user/logout`,{headers: this.http_headers}).toPromise();
-    return result;
+
+  logout() : Observable<any> {
+    return this.http.post<any>(`${environment.api}api/user/logout`,{headers: this.http_headers});
   }
 
   me() : Observable<User> {
     return this.http.get<User>(`${environment.api}api/user/me`,{headers: this.http_headers});
   }
 
-  update(user : User) : Observable<User> {
-    return this.http.put<User>(`${environment.api}api/user`,user,{headers: this.http_headers});
-  }
-  changePassword(password : string) : Observable<any> {
-    const params = {
-      password: password,
-      password_confirmation: password
-    }
-    return this.http.put<any>(`${environment.api}api/user/change-password`,params,{headers: this.http_headers});
+  list() : Observable<User[]> {
+    return this.http.get<User[]>(`${environment.api}api/users`,{headers: this.http_headers});
   }
 }

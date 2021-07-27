@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Auth } from 'src/app/shared/models';
 import { UserService, NotificationService } from './../../shared/services';
 
 @Component({
@@ -32,6 +33,20 @@ export class ResetComponent implements OnInit {
   }
 
   onSubmit() : void{
-    //
+    this.notification_service.presentIonLoading();
+    let form = this.form_group.getRawValue();
+    this.user_service.reset(form.email).subscribe(
+      (response) => {
+        this.resetForm();
+        this.router.navigate(['login']);
+        this.notification_service.presentIonToast(response.message,7000,'success');
+      },
+      () => {
+        this.notification_service.hideIonLoading();
+      },
+      () => {
+        this.notification_service.hideIonLoading();
+      }
+    );
   }
 }

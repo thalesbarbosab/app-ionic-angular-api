@@ -35,7 +35,21 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() : void{
-    //
+    this.notification_service.presentIonLoading('registrando novo usuário...');
+    let user = this.form_group.getRawValue() as User;
+    user.password_confirmation = user.password;
+    this.user_service.register(user).subscribe(
+      () => {
+        this.resetForm();
+        this.router.navigate(['login']);
+      },
+      (error) => {
+        this.notification_service.hideIonLoading();
+      },
+      () => {
+        this.notification_service.hideIonLoading();
+      }
+    );
   }
 
 }
