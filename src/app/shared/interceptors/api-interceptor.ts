@@ -45,7 +45,7 @@ export class ApiInterceptor implements HttpInterceptor {
             this.notification_service.presentIonToast('as credenciais informadas não foram encontradas',5000,'danger');
           }else if (error.status >= 401 && error.status <= 403) {
             this.notification_service.presentIonToast('você não possúi permissão para realizar esta ação, realize o login e tente novamente.',5000,'warning');
-            this.router.navigate(['login']);
+            this.router.navigate(['']);
           } else if (error.status == 422) {
             Object.entries(error.error.errors).forEach((item) => {
               item.forEach((item2, index) => {
